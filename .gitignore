@@ -11,6 +11,9 @@
 # production
 /build
 
+# static files
+/src/static
+
 # misc
 .DS_Store
 .env.local
