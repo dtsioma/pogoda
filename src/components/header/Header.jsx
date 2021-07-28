@@ -20,7 +20,7 @@ export const Header = () => {
       <Toolbar>
         <span className={classes.title}>pogoda</span>
         <Button
-          href="https://github.com/dtsioma/pogoda"
+          href={process.env.REACT_APP_GITHUB_LINK}
           component="button"
           className={classes.button}
           target="_blank"
