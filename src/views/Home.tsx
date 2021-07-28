@@ -27,15 +27,25 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
+interface LocationResponseItem {
+  id: number;
+  name: string;
+  region: string;
+  country: string;
+  lat: number;
+  lon: number;
+  url: string;
+}
+
+interface LocationOption {
+  id: number;
+  name: string;
+}
+
 const Home = () => {
   const classes = useStyles();
   const [shrink, setShrink] = useState<boolean>(false);
-
-  const locationOptions = [
-    { title: "New York" },
-    { title: "Los Angeles" },
-    { title: "San Diego" },
-  ];
+  const [locationOptions, setLocationOptions] = useState<LocationOption[]>([]);
 
   const handleFocus = () => {
     setShrink(true);
@@ -47,6 +57,17 @@ const Home = () => {
     }
   };
 
+  let timer: ReturnType<typeof setTimeout>;
+
+  const handleChange = () => {
+    clearTimeout(timer);
+    timer = setTimeout(searchLocations, 1000);
+  };
+
+  const searchLocations = () => {
+    console.log("search locations");
+  };
+
   return (
     <Grid
       container
@@ -54,12 +75,12 @@ const Home = () => {
       alignItems="center"
       className={classes.container}
     >
-      <Grid item direction="row" alignItems="center" className={classes.form}>
+      <Grid item className={classes.form}>
         <Autocomplete
           id="free-solo-demo"
           freeSolo
           disableClearable
-          options={locationOptions.map((option) => option.title)}
+          options={locationOptions.map((option) => option.name)}
           noOptionsText="No results"
           style={{ flex: 1 }}
           renderInput={(params) => (
@@ -76,6 +97,7 @@ const Home = () => {
               }}
               InputProps={{
                 ...params.InputProps,
+                onChange: handleChange,
                 startAdornment: <NearMeIcon className={classes.icon} />,
                 endAdornment: (
                   <Button color="primary" variant="contained">
