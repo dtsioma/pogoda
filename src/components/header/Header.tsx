@@ -1,4 +1,5 @@
-import { Theme, AppBar, Toolbar, makeStyles, Button } from "@material-ui/core";
+import { Theme, AppBar, Toolbar, makeStyles, Link } from "@material-ui/core";
+import GitHubIcon from "@material-ui/icons/GitHub";
 
 const useStyles = makeStyles((theme: Theme) => ({
   title: {
@@ -7,7 +8,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     textTransform: "uppercase",
     flexGrow: 1,
   },
-  button: {
+  link: {
     color: theme.palette.primary.contrastText,
   },
 }));
@@ -19,13 +20,13 @@ const Header = () => {
     <AppBar>
       <Toolbar>
         <span className={classes.title}>pogoda</span>
-        <Button
+        <Link
           href={process.env.REACT_APP_GITHUB_LINK!}
-          className={classes.button}
+          className={classes.link}
           target="_blank"
         >
-          Github
-        </Button>
+          <GitHubIcon />
+        </Link>
       </Toolbar>
     </AppBar>
   );
