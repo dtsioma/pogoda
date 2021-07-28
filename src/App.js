@@ -1,7 +1,16 @@
-import "./App.css";
+import { Header } from "./components/header/Header";
+import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+import { themeConfig } from "./utils/themeConfig";
 
 function App() {
-  return <div className="App"></div>;
+  const theme = createTheme(themeConfig);
+  return (
+    <div className="App">
+      <ThemeProvider theme={theme}>
+        <Header />
+      </ThemeProvider>
+    </div>
+  );
 }
 
 export default App;
