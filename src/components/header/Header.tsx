@@ -1,6 +1,6 @@
-import { AppBar, Toolbar, makeStyles, Button } from "@material-ui/core";
+import { Theme, AppBar, Toolbar, makeStyles, Button } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   title: {
     fontFamily: "Zen Tokyo Zoo",
     fontSize: "30px",
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Header = () => {
+const Header = () => {
   const classes = useStyles();
 
   return (
@@ -20,8 +20,7 @@ export const Header = () => {
       <Toolbar>
         <span className={classes.title}>pogoda</span>
         <Button
-          href={process.env.REACT_APP_GITHUB_LINK}
-          component="button"
+          href={process.env.REACT_APP_GITHUB_LINK!}
           className={classes.button}
           target="_blank"
         >
@@ -31,3 +30,5 @@ export const Header = () => {
     </AppBar>
   );
 };
+
+export default Header;

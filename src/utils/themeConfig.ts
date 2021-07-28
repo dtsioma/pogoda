@@ -1,4 +1,6 @@
-export const themeConfig = {
+import { ThemeOptions } from "@material-ui/core";
+
+export const themeConfig: ThemeOptions = {
   palette: {
     primary: {
       light: "#1976d2",
