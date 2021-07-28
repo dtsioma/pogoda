@@ -1,4 +1,4 @@
-# Wezza
+# Pogoda
 
 ### Weather App
 
