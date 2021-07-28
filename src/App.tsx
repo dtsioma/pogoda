@@ -2,6 +2,7 @@ import Header from "./components/header/Header";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import { themeConfig } from "./utils/themeConfig";
 import Routes from "./components/general/Routes";
+import "./App.css";
 
 const App = () => {
   const theme = createTheme(themeConfig);

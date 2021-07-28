@@ -12,7 +12,7 @@ export const themeConfig: ThemeOptions = {
       light: "#fff",
       main: "#fff",
       dark: "#fff",
-      contrastText: "#fff",
+      contrastText: "#63a4ff",
     },
   },
 };
