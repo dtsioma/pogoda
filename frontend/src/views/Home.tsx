@@ -69,8 +69,11 @@ const Home = () => {
         loading={loading}
         onChange={(_, value) => {
           if (value) {
+            const optionPlaceId = locationOptions.filter(
+              (opt) => opt.name === value
+            )[0].placeId;
             const slug = getSlugFromName(value);
-            history.push(`/${slug}`);
+            history.push(`/${slug}`, { placeId: optionPlaceId });
           }
         }}
         options={locationOptions.map((option) => option.name)}

@@ -1,9 +1,17 @@
 import { makeStyles } from "@material-ui/core";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 
 interface ForecastParams {
   slug: string;
+}
+
+interface ForecastProps {
+  placeId: string;
+}
+
+interface LocationState {
+  placeId: string;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -16,9 +24,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Forecast: React.FC = () => {
-  const { slug }: ForecastParams = useParams();
+export const Forecast: React.FC<ForecastProps> = () => {
   const classes = useStyles();
+  const { slug }: ForecastParams = useParams();
+  const location = useLocation<LocationState>();
+  const history = useHistory();
 
-  return <div className={classes.container}>{slug}</div>;
+  console.log(location);
+
+  if (!location.state) {
+    history.replace("/");
+    return null;
+  }
+
+  return (
+    <div className={classes.container}>
+      Slug: {slug}
+      PlaceId: {location.state.placeId}
+    </div>
+  );
 };
