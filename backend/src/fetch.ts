@@ -23,3 +23,18 @@ export const APIFetchLocations = async (q: string) => {
 
   return response;
 };
+
+export const APIFetchForecast = async (lat: number, lon: number) => {
+  const apiURL = process.env.WEATHER_API_URL!;
+  const apiKey = process.env.WEATHER_API_KEY!;
+  const reqURL = `${apiURL}?appId=${apiKey}&lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts`;
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const response = await fetch(reqURL, options).then((res) => res.json());
+
+  return response;
+};
