@@ -12,7 +12,6 @@ app.get("/api", (req, res) => res.send("API server"));
 
 app.get("/api/search/:q", async (req, res) => {
   const locations = await fetchSearchLocations(req.params.q);
-  console.log({ locations });
   res.send(locations);
 });
 

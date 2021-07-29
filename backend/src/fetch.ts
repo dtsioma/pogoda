@@ -1,15 +1,26 @@
 import fetch from "node-fetch";
+import { AutoCompleteResponse, LocationPrediction } from "./interfaces";
 
 export const fetchSearchLocations = async (q: string) => {
-  const url = `http://api.weatherapi.com/v1/search.json?q=${q}`;
+  const apiURL = process.env.AUTOCOMPLETE_API_URL!;
+  const apiKey = process.env.AUTOCOMPLETE_API_KEY!;
+  const reqURL = `${apiURL}?key=${apiKey}&types=geocode&input=${q}`;
   const options = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      key: process.env.WEATHER_API_KEY!,
     },
   };
-  const response = await fetch(url, options).then((res) => res.json());
+  const response = await fetch(reqURL, options)
+    .then((res) => res.json())
+    .then((resJSON: AutoCompleteResponse) => {
+      return resJSON.predictions.map(
+        (loc: LocationPrediction, idx: number) => ({
+          idx,
+          name: loc.description,
+        })
+      );
+    });
 
   return response;
 };
