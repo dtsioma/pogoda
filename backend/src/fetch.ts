@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import { AutoCompleteResponse, LocationPrediction } from "./interfaces";
 
-export const fetchSearchLocations = async (q: string) => {
+export const APIFetchLocations = async (q: string) => {
   const apiURL = process.env.AUTOCOMPLETE_API_URL!;
   const apiKey = process.env.AUTOCOMPLETE_API_KEY!;
   const reqURL = `${apiURL}?key=${apiKey}&types=geocode&input=${q}`;
@@ -15,8 +15,8 @@ export const fetchSearchLocations = async (q: string) => {
     .then((res) => res.json())
     .then((resJSON: AutoCompleteResponse) => {
       return resJSON.predictions.map(
-        (loc: LocationPrediction, idx: number) => ({
-          idx,
+        (loc: LocationPrediction, id: number) => ({
+          id,
           name: loc.description,
         })
       );
