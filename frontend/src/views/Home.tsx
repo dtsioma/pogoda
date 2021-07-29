@@ -81,7 +81,6 @@ const Home = () => {
           <TextField
             {...params}
             label="Your location"
-            margin="normal"
             variant="outlined"
             onFocus={handleFocus}
             onBlur={handleBlur}
