@@ -1,10 +1,18 @@
 import "dotenv/config";
 import express from "express";
 import { APIFetchLocations } from "./fetch";
+import cors from "cors";
 
 const port = process.env.PORT || 4000;
 
 const app = express();
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 
 app.get("/", (req, res) => res.send("Hello!"));
 
