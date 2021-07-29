@@ -1,7 +1,10 @@
-import { makeStyles } from "@material-ui/core";
+import { CircularProgress, Grid, makeStyles } from "@material-ui/core";
 import React, { useEffect } from "react";
+import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import { Now } from "../components/forecast/Now";
 import { fetchForecast } from "../utils/fetch";
+import { ForecastResponse } from "../utils/interfaces";
 
 interface ForecastParams {
   slug: string;
@@ -16,10 +19,7 @@ interface LocationState {
 }
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+  forecast: {
     width: "100vw",
     height: "100vh",
   },
@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const Forecast: React.FC<ForecastProps> = () => {
   const classes = useStyles();
+  const [forecast, setForecast] = useState<ForecastResponse>();
   const { slug }: ForecastParams = useParams();
   const location = useLocation<LocationState>();
   const history = useHistory();
@@ -38,14 +39,29 @@ export const Forecast: React.FC<ForecastProps> = () => {
     }
 
     (async () => {
-      console.log(await fetchForecast(location.state.placeId));
+      setForecast(await fetchForecast(location.state.placeId));
     })();
   }, []);
 
   return (
-    <div className={classes.container}>
-      Slug: {slug}
-      PlaceId: {location.state.placeId}
-    </div>
+    <Grid
+      container
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+      className={classes.forecast}
+    >
+      <Grid item>
+        {forecast ? (
+          <Now
+            iconId={forecast.current.weather[0].icon}
+            temperature={Math.round(forecast.current.temp)}
+            description={forecast.current.weather[0].main}
+          />
+        ) : (
+          <CircularProgress />
+        )}
+      </Grid>
+    </Grid>
   );
 };
