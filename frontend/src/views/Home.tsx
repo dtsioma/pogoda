@@ -1,5 +1,12 @@
 import { useEffect } from "react";
-import { Grid, TextField, makeStyles, Theme, Button } from "@material-ui/core";
+import {
+  Grid,
+  TextField,
+  makeStyles,
+  Theme,
+  Button,
+  CircularProgress,
+} from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import NearMeIcon from "@material-ui/icons/NearMe";
 import { ChangeEvent, useState } from "react";
@@ -25,6 +32,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: theme.palette.primary.main,
   },
   form: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     width: "400px",
   },
   labelNotShrink: {
@@ -39,7 +49,9 @@ const Home = () => {
   const [locationOptions, setLocationOptions] = useState<AutoCompleteOption[]>(
     []
   );
-  const [autoCompleteJSX, setAutoCompleteJSX] = useState<JSX.Element>();
+  const [autoCompleteJSX, setAutoCompleteJSX] = useState<JSX.Element>(
+    <CircularProgress size={60} />
+  );
   const history = useHistory();
 
   const handleFocus = () => {
