@@ -5,6 +5,8 @@ import NearMeIcon from "@material-ui/icons/NearMe";
 import { ChangeEvent, useState } from "react";
 import { fetchLocations } from "../utils/fetch";
 import { AutoCompleteOption } from "../utils/interfaces";
+import { useHistory } from "react-router-dom";
+import { getSlugFromName } from "../utils/location-name-slug";
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -38,6 +40,7 @@ const Home = () => {
     []
   );
   const [autoCompleteJSX, setAutoCompleteJSX] = useState<JSX.Element>();
+  const history = useHistory();
 
   const handleFocus = () => {
     setShrink(true);
@@ -65,6 +68,12 @@ const Home = () => {
         freeSolo
         disableClearable
         loading={loading}
+        onChange={(_, value) => {
+          if (value) {
+            const slug = getSlugFromName(value);
+            history.push(`/${slug}`);
+          }
+        }}
         options={locationOptions.map((option) => option.name)}
         noOptionsText="No results"
         style={{ flex: 1 }}
@@ -104,12 +113,6 @@ const Home = () => {
   };
 
   let timer: ReturnType<typeof setTimeout>;
-
-  // const searchLocations = async (q: string) => {
-  //   const locations = await fetchLocations(q);
-  //   console.log("search locations");
-  //   return locations;
-  // };
 
   return (
     <Grid
