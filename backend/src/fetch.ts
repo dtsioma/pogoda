@@ -45,7 +45,7 @@ export const APIFetchCoordinates = async (placeId: string) => {
 export const APIFetchForecast = async (lat: number, lon: number) => {
   const apiURL = process.env.WEATHER_API_URL!;
   const apiKey = process.env.WEATHER_API_KEY!;
-  const reqURL = `${apiURL}?appId=${apiKey}&lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts`;
+  const reqURL = `${apiURL}?appId=${apiKey}&lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&units=imperial`;
   const options = {
     method: "GET",
     headers: {
