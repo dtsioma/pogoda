@@ -23,6 +23,11 @@ app.get("/api/search/:q", async (req, res) => {
   res.send(locations);
 });
 
+// app.get("/api/forecast/:q", async (req, res) => {
+//   const locations = await APIFetchForecast(req.params.q);
+//   res.send(locations);
+// });
+
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });

@@ -14,12 +14,11 @@ export const APIFetchLocations = async (q: string) => {
   const response = await fetch(reqURL, options)
     .then((res) => res.json())
     .then((resJSON: AutoCompleteResponse) => {
-      return resJSON.predictions.map(
-        (loc: LocationPrediction, id: number) => ({
-          id,
-          name: loc.description,
-        })
-      );
+      return resJSON.predictions.map((loc: LocationPrediction, id: number) => ({
+        id,
+        placeId: loc.place_id,
+        name: loc.description,
+      }));
     });
 
   return response;

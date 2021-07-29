@@ -61,7 +61,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    console.log({ loading });
     setAutoCompleteJSX(
       <Autocomplete
         id="free-solo-demo"
