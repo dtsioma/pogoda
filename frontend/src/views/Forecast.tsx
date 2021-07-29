@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core";
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import { fetchForecast } from "../utils/fetch";
 
 interface ForecastParams {
   slug: string;
@@ -30,12 +31,16 @@ export const Forecast: React.FC<ForecastProps> = () => {
   const location = useLocation<LocationState>();
   const history = useHistory();
 
-  console.log(location);
+  useEffect(() => {
+    if (!location.state) {
+      history.replace("/");
+      return;
+    }
 
-  if (!location.state) {
-    history.replace("/");
-    return null;
-  }
+    (async () => {
+      console.log(await fetchForecast(location.state.placeId));
+    })();
+  }, []);
 
   return (
     <div className={classes.container}>
