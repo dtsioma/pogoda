@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { Now } from "../components/forecast/Now";
 import { fetchForecast } from "../utils/fetch";
-import { getWeekday } from "../utils/weekday";
 import { ForecastResponse } from "../utils/interfaces";
 import { Daily } from "../components/forecast/Daily";
 
@@ -60,6 +59,7 @@ export const Forecast: React.FC<ForecastProps> = () => {
         {forecast ? (
           <>
             <Now
+              name={forecast.name}
               iconId={forecast.current.weather[0].icon}
               temperature={forecast.current.temp}
               description={forecast.current.weather[0].main}

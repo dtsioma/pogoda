@@ -27,7 +27,7 @@ export const APIFetchLocations = async (q: string) => {
 export const APIFetchCoordinates = async (placeId: string) => {
   const apiURL = process.env.COORDINATES_API_URL!;
   const apiKey = process.env.COORDINATES_API_KEY!;
-  const reqURL = `${apiURL}?key=${apiKey}&place_id=${placeId}&fields=geometry`;
+  const reqURL = `${apiURL}?key=${apiKey}&place_id=${placeId}&fields=name,geometry`;
   const options = {
     method: "GET",
     headers: {
@@ -37,6 +37,7 @@ export const APIFetchCoordinates = async (placeId: string) => {
   const response = await fetch(reqURL, options).then((res) => res.json());
 
   return {
+    name: response.result.name,
     lat: response.result.geometry.location.lat,
     lon: response.result.geometry.location.lng,
   };

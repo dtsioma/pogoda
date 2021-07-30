@@ -28,9 +28,9 @@ app.get("/api/search/:q", async (req, res) => {
 });
 
 app.get("/api/forecast/:placeId", async (req, res) => {
-  const { lat, lon } = await APIFetchCoordinates(req.params.placeId);
+  const { name, lat, lon } = await APIFetchCoordinates(req.params.placeId);
   const forecast = await APIFetchForecast(lat, lon);
-  res.send(forecast);
+  res.send({ name, ...forecast });
 });
 
 app.listen(port, () => {

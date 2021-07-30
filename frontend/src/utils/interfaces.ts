@@ -5,6 +5,7 @@ export interface AutoCompleteOption {
 }
 
 export interface ForecastResponse {
+  name: string;
   lat: number;
   lon: number;
   timezone: string;

@@ -2,6 +2,7 @@ import { CircularProgress, Grid, makeStyles } from "@material-ui/core";
 import React, { useState } from "react";
 
 interface NowProps {
+  name: string;
   iconId: string;
   temperature: number;
   description: string;
@@ -26,9 +27,13 @@ const useStyles = makeStyles((theme) => ({
   now: {
     backgroundColor: "white",
   },
+  name: {
+    fontSize: "2em",
+  },
 }));
 
 export const Now: React.FC<NowProps> = ({
+  name,
   iconId,
   temperature,
   description,
@@ -38,6 +43,7 @@ export const Now: React.FC<NowProps> = ({
 
   return (
     <Grid container alignItems="center" direction="column">
+      <strong className={classes.name}>{name}</strong>
       {imageLoading ? <CircularProgress /> : null}
       <img
         src={`http://openweathermap.org/img/wn/${iconId}@4x.png`}
