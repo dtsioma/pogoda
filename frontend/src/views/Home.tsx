@@ -15,6 +15,7 @@ import { fetchLocations, fetchNameWithCoordinates } from "../utils/fetch";
 import { AutoCompleteOption } from "../utils/interfaces";
 import { useHistory } from "react-router-dom";
 import { getSlugFromName } from "../utils/location-name-slug";
+import { AutoLocationLoading } from "../components/home/AutoLocationLoading";
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -53,6 +54,8 @@ const Home = () => {
   const [autoCompleteJSX, setAutoCompleteJSX] = useState<JSX.Element>(
     <CircularProgress size={60} />
   );
+  const [autoLocationLoading, setAutoLocationLoading] =
+    useState<boolean>(false);
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const [alertText, setAlertText] = useState<string>("");
   const history = useHistory();
@@ -81,16 +84,17 @@ const Home = () => {
     console.log("auto locate");
     setShrink(false);
     if (navigator.geolocation) {
+      setAutoLocationLoading(true);
       navigator.geolocation.getCurrentPosition(handleGeocode, handleError);
     } else {
-      console.log("Geolocation is not supported by this browser.");
+      setAlertText("Geolocation is not supported by this browser.");
+      setShowAlert(true);
     }
   };
 
   const handleGeocode = async (position: GeolocationPosition) => {
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
-    console.log(lat, lon);
 
     await fetchNameWithCoordinates(lat, lon).then((res) => {
       const slug = getSlugFromName(res.name);
@@ -186,6 +190,19 @@ const Home = () => {
   };
 
   let timer: ReturnType<typeof setTimeout>;
+
+  if (autoLocationLoading) {
+    return (
+      <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+        className={classes.container}
+      >
+        <AutoLocationLoading />
+      </Grid>
+    );
+  }
 
   return (
     <>
