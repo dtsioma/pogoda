@@ -20,23 +20,24 @@ interface LocationState {
   placeId: string;
 }
 
-const useStyles = makeStyles((theme) => ({
-  forecast: {
-    width: "100vw",
-    height: "100vh",
-  },
-  dailyContainer: {
-    marginTop: "5em",
-  },
-}));
-
 export const Forecast: React.FC = () => {
-  const classes = useStyles();
   const [forecast, setForecast] = useState<ForecastResponse>();
   const { slug }: ForecastParams = useParams();
   const location = useLocation<LocationState>();
   const [name, setName] = useState<string>("");
   const history = useHistory();
+
+  const useStyles = makeStyles((theme) => ({
+    forecast: {
+      width: "100%",
+      height: forecast ? "auto" : "100vh",
+      paddingTop: forecast ? "90px" : 0,
+    },
+    dailyContainer: {
+      marginTop: "5em",
+    },
+  }));
+  const classes = useStyles();
 
   useEffect(() => {
     let isMounted = true;
