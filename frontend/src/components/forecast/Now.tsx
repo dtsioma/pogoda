@@ -12,6 +12,12 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.main,
     fontSize: "3em",
     lineHeight: 1,
+    position: "relative",
+    "&::after": {
+      content: '"°"',
+      position: "absolute",
+      top: 0,
+    },
   },
   description: {
     fontSize: "1em",
@@ -41,7 +47,7 @@ export const Now: React.FC<NowProps> = ({
         }}
         alt={description}
       />
-      <strong className={classes.degrees}>{temperature}</strong>
+      <strong className={classes.degrees}>{Math.round(temperature)}</strong>
       <span className={classes.description}>{description}</span>
     </Grid>
   );

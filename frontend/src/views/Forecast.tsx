@@ -4,7 +4,9 @@ import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { Now } from "../components/forecast/Now";
 import { fetchForecast } from "../utils/fetch";
+import { getWeekday } from "../utils/weekday";
 import { ForecastResponse } from "../utils/interfaces";
+import { Daily } from "../components/forecast/Daily";
 
 interface ForecastParams {
   slug: string;
@@ -22,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
   forecast: {
     width: "100vw",
     height: "100vh",
+  },
+  dailyContainer: {
+    marginTop: "5em",
   },
 }));
 
@@ -53,11 +58,31 @@ export const Forecast: React.FC<ForecastProps> = () => {
     >
       <Grid item>
         {forecast ? (
-          <Now
-            iconId={forecast.current.weather[0].icon}
-            temperature={Math.round(forecast.current.temp)}
-            description={forecast.current.weather[0].main}
-          />
+          <>
+            <Now
+              iconId={forecast.current.weather[0].icon}
+              temperature={forecast.current.temp}
+              description={forecast.current.weather[0].main}
+            />
+            <Grid
+              container
+              direction="row"
+              alignItems="center"
+              justifyContent="center"
+              className={classes.dailyContainer}
+            >
+              {forecast.daily.map((day, idx) => (
+                <Daily
+                  idx={idx}
+                  dt={day.dt}
+                  iconId={day.weather[0].icon}
+                  tempMin={day.temp.min}
+                  tempMax={day.temp.max}
+                  description={day.weather[0].description}
+                />
+              ))}
+            </Grid>
+          </>
         ) : (
           <CircularProgress />
         )}
