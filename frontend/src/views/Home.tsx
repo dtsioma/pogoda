@@ -72,6 +72,21 @@ const Home = () => {
     }
   };
 
+  const handleAutoLocate = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(handleGeocode);
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  };
+
+  const handleGeocode = (position: GeolocationPosition) => {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+
+    console.log(localStorage.filter((i: any) => i));
+  };
+
   useEffect(() => {
     setAutoCompleteJSX(
       <Autocomplete
@@ -109,7 +124,11 @@ const Home = () => {
               onChange: handleChange,
               startAdornment: <NearMeIcon className={classes.icon} />,
               endAdornment: (
-                <Button color="primary" variant="contained">
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={handleAutoLocate}
+                >
                   Auto
                 </Button>
               ),

@@ -4,6 +4,7 @@ import {
   APIFetchCoordinatesWithPlaceId,
   APIFetchForecastWithCoordinates,
   APIFetchLocations,
+  APIFetchNameWithCoordinates,
 } from "./fetch";
 import cors from "cors";
 
@@ -39,6 +40,14 @@ app.get("/api/forecast/placeId/:placeId", async (req, res) => {
   const { lat, lon } = await APIFetchCoordinatesWithPlaceId(req.params.placeId);
   const forecast = await APIFetchForecastWithCoordinates(lat, lon);
   res.send(forecast);
+});
+
+app.get("/api/name/coordinates/:lat/:lon", async (req, res) => {
+  const name = await APIFetchNameWithCoordinates(
+    req.params.lat,
+    req.params.lon
+  );
+  res.send(name);
 });
 
 app.listen(port, () => {

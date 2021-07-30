@@ -59,3 +59,20 @@ export const APIFetchForecastWithCoordinates = async (
 
   return response;
 };
+
+export const APIFetchNameWithCoordinates = async (lat: string, lon: string) => {
+  const apiURL = process.env.GEOCODING_API_URL!;
+  const apiKey = process.env.GEOCODING_API_KEY!;
+  const reqURL = `${apiURL}?key=${apiKey}&latlng=${lat},${lon}&result_type=locality`;
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const response = await fetch(reqURL, options).then((res) => res.json());
+
+  const name = response.results[0].formatted_address;
+
+  return name;
+};
