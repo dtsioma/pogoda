@@ -9,10 +9,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     textTransform: "uppercase",
     color: theme.palette.primary.contrastText,
     textDecoration: "none",
-    flexGrow: 1,
   },
   link: {
     color: theme.palette.primary.contrastText,
+    marginLeft: "auto",
   },
 }));
 
