@@ -24,10 +24,10 @@ export const APIFetchLocations = async (q: string) => {
   return response;
 };
 
-export const APIFetchCoordinates = async (placeId: string) => {
+export const APIFetchCoordinatesWithPlaceId = async (placeId: string) => {
   const apiURL = process.env.COORDINATES_API_URL!;
   const apiKey = process.env.COORDINATES_API_KEY!;
-  const reqURL = `${apiURL}?key=${apiKey}&place_id=${placeId}&fields=name,geometry`;
+  const reqURL = `${apiURL}?key=${apiKey}&place_id=${placeId}&fields=geometry`;
   const options = {
     method: "GET",
     headers: {
@@ -37,13 +37,15 @@ export const APIFetchCoordinates = async (placeId: string) => {
   const response = await fetch(reqURL, options).then((res) => res.json());
 
   return {
-    name: response.result.name,
     lat: response.result.geometry.location.lat,
     lon: response.result.geometry.location.lng,
   };
 };
 
-export const APIFetchForecast = async (lat: number, lon: number) => {
+export const APIFetchForecastWithCoordinates = async (
+  lat: string,
+  lon: string
+) => {
   const apiURL = process.env.WEATHER_API_URL!;
   const apiKey = process.env.WEATHER_API_KEY!;
   const reqURL = `${apiURL}?appId=${apiKey}&lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&units=imperial`;

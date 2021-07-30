@@ -3,7 +3,10 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { Now } from "../components/forecast/Now";
-import { fetchForecast } from "../utils/fetch";
+import {
+  fetchForecastWithPlaceId,
+  fetchForecastWithCoordinates,
+} from "../utils/fetch";
 import { ForecastResponse } from "../utils/interfaces";
 import { Daily } from "../components/forecast/Daily";
 
@@ -11,11 +14,8 @@ interface ForecastParams {
   slug: string;
 }
 
-interface ForecastProps {
-  placeId: string;
-}
-
 interface LocationState {
+  name: string;
   placeId: string;
 }
 
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Forecast: React.FC<ForecastProps> = () => {
+export const Forecast: React.FC = () => {
   const classes = useStyles();
   const [forecast, setForecast] = useState<ForecastResponse>();
   const { slug }: ForecastParams = useParams();
@@ -37,21 +37,52 @@ export const Forecast: React.FC<ForecastProps> = () => {
   const history = useHistory();
 
   useEffect(() => {
-    if (location.state) {
-      // placeId from location state
+    if (localStorage.getItem(slug)) {
+      // get coordinates from localStorage
+      const locData: string = localStorage.getItem(slug)!;
+      const [lat, lon] = locData.split("|")[1].split(",");
+      // fetch forecast with coordinates
       (async () => {
-        localStorage.setItem(slug, location.state.placeId);
-        setForecast(await fetchForecast(location.state.placeId));
+        const response = await fetchForecastWithCoordinates(lat, lon).then(
+          (resJSON) => {
+            setForecast(resJSON);
+          }
+        );
       })();
-    } else if (localStorage[slug]) {
-      // placeId from localStorage
+    } else if (
+      location.state.name.length > 0 &&
+      location.state.placeId.length > 0
+    ) {
+      // fetch with placeId, name exists
       (async () => {
-        setForecast(await fetchForecast(localStorage[slug]));
+        const response = await fetchForecastWithPlaceId(
+          location.state.placeId
+        ).then((resJSON: ForecastResponse) => {
+          setForecast(resJSON);
+          // save location data in localStorage
+          localStorage.setItem(
+            slug,
+            `${location.state.name}|${resJSON.lat},${resJSON.lon}`
+          );
+        });
       })();
-    } else {
-      // no placeId, redirect
-      history.replace("/");
     }
+
+    // if (location.state) {
+    //   // placeId from location state
+    //   (async () => {
+    //     localStorage.setItem(slug, location.state.placeId);
+    //     setForecast(await fetchForecast(location.state.placeId));
+    //   })();
+    // } else if (localStorage[slug]) {
+    //   // placeId from localStorage
+    //   (async () => {
+    //     setForecast(await fetchForecast(localStorage[slug]));
+    //   })();
+    // } else {
+    //   // no placeId, redirect
+    //   history.replace("/");
+    // }
   }, []);
 
   return (
@@ -80,6 +111,7 @@ export const Forecast: React.FC<ForecastProps> = () => {
             >
               {forecast.daily.map((day, idx) => (
                 <Daily
+                  key={idx}
                   idx={idx}
                   dt={day.dt}
                   iconId={day.weather[0].icon}

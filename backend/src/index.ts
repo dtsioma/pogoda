@@ -1,8 +1,8 @@
 import "dotenv/config";
 import express from "express";
 import {
-  APIFetchCoordinates,
-  APIFetchForecast,
+  APIFetchCoordinatesWithPlaceId,
+  APIFetchForecastWithCoordinates,
   APIFetchLocations,
 } from "./fetch";
 import cors from "cors";
@@ -27,10 +27,18 @@ app.get("/api/search/:q", async (req, res) => {
   res.send(locations);
 });
 
-app.get("/api/forecast/:placeId", async (req, res) => {
-  const { name, lat, lon } = await APIFetchCoordinates(req.params.placeId);
-  const forecast = await APIFetchForecast(lat, lon);
-  res.send({ name, ...forecast });
+app.get("/api/forecast/coordinates/:lat/:lon", async (req, res) => {
+  const locations = await APIFetchForecastWithCoordinates(
+    req.params.lat,
+    req.params.lon
+  );
+  res.send(locations);
+});
+
+app.get("/api/forecast/placeId/:placeId", async (req, res) => {
+  const { lat, lon } = await APIFetchCoordinatesWithPlaceId(req.params.placeId);
+  const forecast = await APIFetchForecastWithCoordinates(lat, lon);
+  res.send(forecast);
 });
 
 app.listen(port, () => {

@@ -86,7 +86,7 @@ const Home = () => {
             if (opts.length > 0) {
               const optionPlaceId = opts[0].placeId;
               const slug = getSlugFromName(value);
-              history.push(`/${slug}`, { placeId: optionPlaceId });
+              history.push(`/${slug}`, { name: value, placeId: optionPlaceId });
             }
           }
         }}
