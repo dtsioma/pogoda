@@ -15,7 +15,7 @@ import { fetchLocations, fetchNameWithCoordinates } from "../utils/fetch";
 import { AutoCompleteOption } from "../utils/interfaces";
 import { useHistory } from "react-router-dom";
 import { getSlugFromName } from "../utils/location-name-slug";
-import { AutoLocationLoading } from "../components/home/AutoLocationLoading";
+import { CircularLoading } from "../components/general/CircularLoading";
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -199,7 +199,7 @@ const Home = () => {
         alignItems="center"
         className={classes.container}
       >
-        <AutoLocationLoading />
+        <CircularLoading text="Detecting your location..." />
       </Grid>
     );
   }

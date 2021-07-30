@@ -1,9 +1,4 @@
-import {
-  CircularProgress,
-  Grid,
-  makeStyles,
-  Snackbar,
-} from "@material-ui/core";
+import { Grid, makeStyles } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
@@ -14,7 +9,7 @@ import {
 } from "../utils/fetch";
 import { ForecastResponse } from "../utils/interfaces";
 import { Daily } from "../components/forecast/Daily";
-import { Alert } from "@material-ui/lab";
+import { CircularLoading } from "../components/general/CircularLoading";
 
 interface ForecastParams {
   slug: string;
@@ -147,7 +142,7 @@ export const Forecast: React.FC = () => {
             </Grid>
           </>
         ) : (
-          <CircularProgress />
+          <CircularLoading text="Loading weather data..." />
         )}
       </Grid>
     </Grid>
