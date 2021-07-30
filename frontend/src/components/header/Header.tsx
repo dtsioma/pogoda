@@ -1,4 +1,5 @@
 import { Theme, AppBar, Toolbar, makeStyles, Link } from "@material-ui/core";
+import { Link as RouterLink } from "react-router-dom";
 import GitHubIcon from "@material-ui/icons/GitHub";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -6,6 +7,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontFamily: "Zen Tokyo Zoo",
     fontSize: "30px",
     textTransform: "uppercase",
+    color: theme.palette.primary.contrastText,
+    textDecoration: "none",
     flexGrow: 1,
   },
   link: {
@@ -19,7 +22,9 @@ const Header = () => {
   return (
     <AppBar>
       <Toolbar>
-        <span className={classes.title}>pogoda</span>
+        <RouterLink to="/" className={classes.title}>
+          pogoda
+        </RouterLink>
         <Link
           href={process.env.REACT_APP_GITHUB_LINK!}
           className={classes.link}
