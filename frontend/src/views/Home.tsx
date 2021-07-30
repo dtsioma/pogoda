@@ -10,7 +10,7 @@ import {
 import { Autocomplete } from "@material-ui/lab";
 import NearMeIcon from "@material-ui/icons/NearMe";
 import { ChangeEvent, useState } from "react";
-import { fetchLocations } from "../utils/fetch";
+import { fetchLocations, fetchNameWithCoordinates } from "../utils/fetch";
 import { AutoCompleteOption } from "../utils/interfaces";
 import { useHistory } from "react-router-dom";
 import { getSlugFromName } from "../utils/location-name-slug";
@@ -74,17 +74,39 @@ const Home = () => {
 
   const handleAutoLocate = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(handleGeocode);
+      navigator.geolocation.getCurrentPosition(handleGeocode, handleError);
     } else {
-      alert("Geolocation is not supported by this browser.");
+      console.log("Geolocation is not supported by this browser.");
     }
   };
 
-  const handleGeocode = (position: GeolocationPosition) => {
+  const handleGeocode = async (position: GeolocationPosition) => {
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
+    console.log(lat, lon);
 
-    console.log(localStorage.filter((i: any) => i));
+    await fetchNameWithCoordinates(lat, lon).then((res) => {
+      const slug = getSlugFromName(res.name);
+      localStorage.setItem(slug, `${res.name}|${lat},${lon}`);
+      history.push(`/${slug}`);
+    });
+  };
+
+  const handleError = (error: GeolocationPositionError) => {
+    switch (error.code) {
+      case error.PERMISSION_DENIED:
+        console.log("User denied the request for Geolocation.");
+        break;
+      case error.POSITION_UNAVAILABLE:
+        console.log("Location information is unavailable.");
+        break;
+      case error.TIMEOUT:
+        console.log("The request to get user location timed out.");
+        break;
+      default:
+        console.log("An unknown error occurred.");
+        break;
+    }
   };
 
   useEffect(() => {

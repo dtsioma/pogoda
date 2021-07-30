@@ -44,3 +44,17 @@ export const fetchForecastWithPlaceId = async (placeId: string) => {
 
   return response;
 };
+
+export const fetchNameWithCoordinates = async (lat: number, lon: number) => {
+  const url = `/api/name/coordinates/${lat}/${lon}`;
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const response = await fetch(url, options).then((res) => res.json());
+  console.log(response);
+
+  return response;
+};

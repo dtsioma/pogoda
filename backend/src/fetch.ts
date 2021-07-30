@@ -74,5 +74,5 @@ export const APIFetchNameWithCoordinates = async (lat: string, lon: string) => {
 
   const name = response.results[0].formatted_address;
 
-  return name;
+  return { name };
 };
