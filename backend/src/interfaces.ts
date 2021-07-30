@@ -27,9 +27,3 @@ interface Matchedsubstring {
 export interface AutoCompleteResponse {
   predictions: LocationPrediction[];
 }
-
-export interface GeocodingAddressComponent {
-  long_name: string;
-  short_name: string;
-  types: string[];
-}
