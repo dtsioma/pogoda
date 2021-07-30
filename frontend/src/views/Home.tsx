@@ -6,8 +6,9 @@ import {
   Theme,
   Button,
   CircularProgress,
+  Snackbar,
 } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
+import { Alert, Autocomplete } from "@material-ui/lab";
 import NearMeIcon from "@material-ui/icons/NearMe";
 import { ChangeEvent, useState } from "react";
 import { fetchLocations, fetchNameWithCoordinates } from "../utils/fetch";
@@ -52,10 +53,14 @@ const Home = () => {
   const [autoCompleteJSX, setAutoCompleteJSX] = useState<JSX.Element>(
     <CircularProgress size={60} />
   );
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [alertText, setAlertText] = useState<string>("");
   const history = useHistory();
 
   const handleFocus = () => {
-    setShrink(true);
+    if (!showAlert) {
+      setShrink(true);
+    }
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -73,6 +78,8 @@ const Home = () => {
   };
 
   const handleAutoLocate = () => {
+    console.log("auto locate");
+    setShrink(false);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(handleGeocode, handleError);
     } else {
@@ -95,18 +102,28 @@ const Home = () => {
   const handleError = (error: GeolocationPositionError) => {
     switch (error.code) {
       case error.PERMISSION_DENIED:
-        console.log("User denied the request for Geolocation.");
+        setAlertText(
+          "Location access is disabled. Enable it or enter location manually."
+        );
+        setShowAlert(true);
         break;
       case error.POSITION_UNAVAILABLE:
-        console.log("Location information is unavailable.");
+        setAlertText("Location information is unavailable.");
+        setShowAlert(true);
         break;
       case error.TIMEOUT:
-        console.log("The request to get user location timed out.");
+        setAlertText("The request to get user location timed out.");
+        setShowAlert(true);
         break;
       default:
-        console.log("An unknown error occurred.");
+        setAlertText("An unknown error occurred.");
+        setShowAlert(true);
         break;
     }
+  };
+
+  const handleCloseAlert = () => {
+    setShowAlert(false);
   };
 
   useEffect(() => {
@@ -171,16 +188,27 @@ const Home = () => {
   let timer: ReturnType<typeof setTimeout>;
 
   return (
-    <Grid
-      container
-      justifyContent="center"
-      alignItems="center"
-      className={classes.container}
-    >
-      <Grid item className={classes.form}>
-        {autoCompleteJSX}
+    <>
+      <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+        className={classes.container}
+      >
+        <Grid item className={classes.form}>
+          {autoCompleteJSX}
+        </Grid>
       </Grid>
-    </Grid>
+      <Snackbar
+        open={showAlert}
+        autoHideDuration={6000}
+        onClose={handleCloseAlert}
+      >
+        <Alert onClose={handleCloseAlert} severity="error">
+          {alertText}
+        </Alert>
+      </Snackbar>
+    </>
   );
 };
 

@@ -1,4 +1,9 @@
-import { CircularProgress, Grid, makeStyles } from "@material-ui/core";
+import {
+  CircularProgress,
+  Grid,
+  makeStyles,
+  Snackbar,
+} from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
@@ -9,6 +14,7 @@ import {
 } from "../utils/fetch";
 import { ForecastResponse } from "../utils/interfaces";
 import { Daily } from "../components/forecast/Daily";
+import { Alert } from "@material-ui/lab";
 
 interface ForecastParams {
   slug: string;

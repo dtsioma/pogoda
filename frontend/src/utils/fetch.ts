@@ -54,7 +54,6 @@ export const fetchNameWithCoordinates = async (lat: number, lon: number) => {
     },
   };
   const response = await fetch(url, options).then((res) => res.json());
-  console.log(response);
 
   return response;
 };
