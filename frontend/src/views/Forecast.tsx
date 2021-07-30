@@ -38,6 +38,7 @@ export const Forecast: React.FC = () => {
   const history = useHistory();
 
   useEffect(() => {
+    let isMounted = true;
     if (localStorage.getItem(slug)) {
       // get coordinates from localStorage
       const locData: string = localStorage.getItem(slug)!;
@@ -51,25 +52,38 @@ export const Forecast: React.FC = () => {
           }
         );
       })();
+    }
+    if (!location.state) {
+      // non-existing slug and no location state, redirect to home
+      history.replace("/");
     } else if (
       location.state.name.length > 0 &&
       location.state.placeId.length > 0
     ) {
       // fetch with placeId, name exists
       (async () => {
+        console.log("i'm here");
         const response = await fetchForecastWithPlaceId(
           location.state.placeId
         ).then((resJSON: ForecastResponse) => {
-          setName(location.state.name);
-          setForecast(resJSON);
-          // save location data in localStorage
-          localStorage.setItem(
-            slug,
-            `${location.state.name}|${resJSON.lat},${resJSON.lon}`
-          );
+          // make sure we are on mounted component
+          if (isMounted) {
+            setName(location.state.name);
+            setForecast(resJSON);
+            // save location data in localStorage
+            localStorage.setItem(
+              slug,
+              `${location.state.name}|${resJSON.lat},${resJSON.lon}`
+            );
+          }
         });
       })();
     }
+
+    // cleanup
+    return () => {
+      isMounted = false;
+    };
 
     // if (location.state) {
     //   // placeId from location state
