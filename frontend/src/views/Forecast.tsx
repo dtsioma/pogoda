@@ -34,12 +34,14 @@ export const Forecast: React.FC = () => {
   const [forecast, setForecast] = useState<ForecastResponse>();
   const { slug }: ForecastParams = useParams();
   const location = useLocation<LocationState>();
+  const [name, setName] = useState<string>("");
   const history = useHistory();
 
   useEffect(() => {
     if (localStorage.getItem(slug)) {
       // get coordinates from localStorage
       const locData: string = localStorage.getItem(slug)!;
+      setName(locData.split("|")[0]);
       const [lat, lon] = locData.split("|")[1].split(",");
       // fetch forecast with coordinates
       (async () => {
@@ -58,6 +60,7 @@ export const Forecast: React.FC = () => {
         const response = await fetchForecastWithPlaceId(
           location.state.placeId
         ).then((resJSON: ForecastResponse) => {
+          setName(location.state.name);
           setForecast(resJSON);
           // save location data in localStorage
           localStorage.setItem(
@@ -97,7 +100,7 @@ export const Forecast: React.FC = () => {
         {forecast ? (
           <>
             <Now
-              name={forecast.name}
+              name={name}
               iconId={forecast.current.weather[0].icon}
               temperature={forecast.current.temp}
               description={forecast.current.weather[0].main}
