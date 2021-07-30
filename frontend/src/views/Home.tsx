@@ -60,6 +60,7 @@ const Home = () => {
       setAutoLocationLoading(true);
       navigator.geolocation.getCurrentPosition(handleGeocode, handleError);
     } else {
+      setAutoLocationLoading(false);
       setAlertText("Geolocation is not supported by this browser.");
       setShowAlert(true);
     }
@@ -79,20 +80,24 @@ const Home = () => {
   const handleError = (error: GeolocationPositionError) => {
     switch (error.code) {
       case error.PERMISSION_DENIED:
+        setAutoLocationLoading(false);
         setAlertText(
           "Location access is disabled. Enable it or enter location manually."
         );
         setShowAlert(true);
         break;
       case error.POSITION_UNAVAILABLE:
+        setAutoLocationLoading(false);
         setAlertText("Location information is unavailable.");
         setShowAlert(true);
         break;
       case error.TIMEOUT:
+        setAutoLocationLoading(false);
         setAlertText("The request to get user location timed out.");
         setShowAlert(true);
         break;
       default:
+        setAutoLocationLoading(false);
         setAlertText("An unknown error occurred.");
         setShowAlert(true);
         break;

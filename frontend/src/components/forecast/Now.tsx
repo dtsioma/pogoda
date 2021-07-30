@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CircularProgress, Grid, makeStyles } from "@material-ui/core";
+import { Box, CircularProgress, Grid, makeStyles } from "@material-ui/core";
 import styles from "./Now.module.css";
 
 interface NowProps {
@@ -18,7 +18,7 @@ export const Now: React.FC<NowProps> = ({
   const [imageLoading, setImageLoading] = useState<boolean>(true);
 
   return (
-    <Grid container alignItems="center" direction="column">
+    <Grid container className={styles.Container}>
       <strong className={styles.Name}>{name}</strong>
       {imageLoading ? <CircularProgress /> : null}
       <img
@@ -28,9 +28,12 @@ export const Now: React.FC<NowProps> = ({
           setImageLoading(false);
         }}
         alt={description}
+        className={styles.Icon}
       />
-      <strong className={styles.Degrees}>{Math.round(temperature)}</strong>
-      <span className={styles.Description}>{description}</span>
+      <div className={styles.Details}>
+        <strong className={styles.Degrees}>{Math.round(temperature)}</strong>
+        <span className={styles.Description}>{description}</span>
+      </div>
     </Grid>
   );
 };

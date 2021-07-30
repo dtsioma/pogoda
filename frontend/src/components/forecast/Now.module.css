@@ -1,8 +1,58 @@
+.Container {
+  align-items: center;
+  flex-direction: column;
+  padding: 0 15px;
+}
+@media (max-width: 959px) {
+  .Container {
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+.Now {
+  background-color: white;
+}
+
+.Name {
+  font-size: 2em;
+  text-align: center;
+}
+@media (max-width: 959px) {
+  .Name {
+    width: 100%;
+    flex-grow: 1;
+  }
+}
+@media (max-width: 599px) {
+  .Name {
+    font-size: 1.5em;
+  }
+}
+
+@media (max-width: 959px) {
+  .Icon {
+    width: 150px;
+  }
+}
+
+.Details {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 .Degrees {
   color: #63a4ff;
   font-size: 3em;
   line-height: 1;
   position: relative;
+}
+@media (max-width: 959px) {
+  .Degrees {
+    font-size: 2em;
+  }
 }
 
 .Degrees:after {
@@ -15,11 +65,8 @@
   font-size: 1em;
   margin-top: 1em;
 }
-
-.Now {
-  background-color: white;
-}
-
-.Name {
-  font-size: 2em;
+@media (max-width: 959px) {
+  .Description {
+    margin-top: 0.5em;
+  }
 }

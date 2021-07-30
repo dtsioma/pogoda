@@ -29,7 +29,7 @@ const Header = () => {
           className={styles.Link}
           target="_blank"
         >
-          <GitHubIcon />
+          <GitHubIcon className={styles.GithubIcon} />
         </MaterialLink>
       </Toolbar>
     </AppBar>

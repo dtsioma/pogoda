@@ -84,10 +84,9 @@ export const Forecast: React.FC = () => {
       direction="column"
       alignItems="center"
       justifyContent="center"
-      className={styles.Forecast}
+      className={[styles.Forecast, forecast ? styles.PaddingTop : 0].join(" ")}
       style={{
         height: forecast ? "auto" : "100vh",
-        paddingTop: forecast ? "90px" : 0,
       }}
     >
       <Grid item>

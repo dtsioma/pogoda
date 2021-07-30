@@ -5,3 +5,22 @@
 .Container {
   margin-top: 5em;
 }
+@media (max-width: 959px) {
+  .Container {
+    margin-top: 2em;
+  }
+}
+@media (max-width: 599px) {
+  .Container {
+    margin-top: 1em;
+  }
+}
+
+.PaddingTop {
+  padding-top: 90px;
+}
+@media (max-width: 599px) {
+  .PaddingTop {
+    padding-top: 76px;
+  }
+}

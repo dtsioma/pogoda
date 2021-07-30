@@ -48,6 +48,7 @@ export const Daily: React.FC<DailyProps> = ({
           setImageLoading(false);
         }}
         alt={description}
+        className={styles.Icon}
       />
       <span className={styles.Degrees}>
         <span className={styles.Max}>{Math.round(tempMax)}&deg;</span>
