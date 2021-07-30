@@ -79,13 +79,15 @@ const Home = () => {
         freeSolo
         disableClearable
         loading={loading}
-        onChange={(_, value) => {
+        onChange={(event, value) => {
           if (value) {
-            const optionPlaceId = locationOptions.filter(
-              (opt) => opt.name === value
-            )[0].placeId;
-            const slug = getSlugFromName(value);
-            history.push(`/${slug}`, { placeId: optionPlaceId });
+            console.log();
+            const opts = locationOptions.filter((opt) => opt.name === value);
+            if (opts.length > 0) {
+              const optionPlaceId = opts[0].placeId;
+              const slug = getSlugFromName(value);
+              history.push(`/${slug}`, { placeId: optionPlaceId });
+            }
           }
         }}
         options={locationOptions.map((option) => option.name)}
