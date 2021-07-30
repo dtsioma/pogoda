@@ -37,14 +37,21 @@ export const Forecast: React.FC<ForecastProps> = () => {
   const history = useHistory();
 
   useEffect(() => {
-    if (!location.state) {
+    if (location.state) {
+      // placeId from location state
+      (async () => {
+        localStorage.setItem(slug, location.state.placeId);
+        setForecast(await fetchForecast(location.state.placeId));
+      })();
+    } else if (localStorage[slug]) {
+      // placeId from localStorage
+      (async () => {
+        setForecast(await fetchForecast(localStorage[slug]));
+      })();
+    } else {
+      // no placeId, redirect
       history.replace("/");
-      return;
     }
-
-    (async () => {
-      setForecast(await fetchForecast(location.state.placeId));
-    })();
   }, []);
 
   return (

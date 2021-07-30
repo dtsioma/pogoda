@@ -76,3 +76,8 @@ interface Weather {
   description: string;
   icon: string;
 }
+
+export interface LocalStoragePlaceId {
+  slug: string;
+  placeId: string;
+}
