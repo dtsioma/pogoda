@@ -1,0 +1,16 @@
+.Degrees {
+  line-height: 1;
+}
+
+.Max {
+  color: #f44336;
+}
+
+.Min {
+  color: #90a4ae;
+}
+
+.Daily {
+  width: auto !important;
+  flex-wrap: nowrap;
+}

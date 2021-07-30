@@ -1,0 +1,25 @@
+.Title {
+  font-family: "Zen Tokyo Zoo";
+  font-size: 30px;
+  text-transform: uppercase;
+  color: white;
+  text-decoration: none;
+}
+
+.Link {
+  color: white !important;
+  margin-left: auto;
+}
+
+.Back {
+  display: flex;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  margin-left: 4em;
+  padding: 5px;
+}
+
+.Icon {
+  margin-right: 5px;
+}

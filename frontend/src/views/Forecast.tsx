@@ -1,4 +1,4 @@
-import { Grid, makeStyles } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
@@ -10,6 +10,7 @@ import {
 import { ForecastResponse } from "../utils/interfaces";
 import { Daily } from "../components/forecast/Daily";
 import { CircularLoading } from "../components/general/CircularLoading";
+import styles from "./Forecast.module.css";
 
 interface ForecastParams {
   slug: string;
@@ -26,18 +27,6 @@ export const Forecast: React.FC = () => {
   const location = useLocation<LocationState>();
   const [name, setName] = useState<string>("");
   const history = useHistory();
-
-  const useStyles = makeStyles((theme) => ({
-    forecast: {
-      width: "100%",
-      height: forecast ? "auto" : "100vh",
-      paddingTop: forecast ? "90px" : 0,
-    },
-    dailyContainer: {
-      marginTop: "5em",
-    },
-  }));
-  const classes = useStyles();
 
   useEffect(() => {
     let isMounted = true;
@@ -87,22 +76,6 @@ export const Forecast: React.FC = () => {
     return () => {
       isMounted = false;
     };
-
-    // if (location.state) {
-    //   // placeId from location state
-    //   (async () => {
-    //     localStorage.setItem(slug, location.state.placeId);
-    //     setForecast(await fetchForecast(location.state.placeId));
-    //   })();
-    // } else if (localStorage[slug]) {
-    //   // placeId from localStorage
-    //   (async () => {
-    //     setForecast(await fetchForecast(localStorage[slug]));
-    //   })();
-    // } else {
-    //   // no placeId, redirect
-    //   history.replace("/");
-    // }
   }, [slug, location.state, history]);
 
   return (
@@ -111,7 +84,11 @@ export const Forecast: React.FC = () => {
       direction="column"
       alignItems="center"
       justifyContent="center"
-      className={classes.forecast}
+      className={styles.Forecast}
+      style={{
+        height: forecast ? "auto" : "100vh",
+        paddingTop: forecast ? "90px" : 0,
+      }}
     >
       <Grid item>
         {forecast ? (
@@ -127,7 +104,7 @@ export const Forecast: React.FC = () => {
               direction="row"
               alignItems="center"
               justifyContent="center"
-              className={classes.dailyContainer}
+              className={styles.Container}
             >
               {forecast.daily.map((day, idx) => (
                 <Daily

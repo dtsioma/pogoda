@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { CircularProgress, Grid, makeStyles } from "@material-ui/core";
+import React, { useState } from "react";
+import { CircularProgress, Grid } from "@material-ui/core";
 import { getWeekday } from "../../utils/weekday";
-import React from "react";
+import styles from "./Daily.module.css";
 
 interface DailyProps {
   idx: number;
@@ -12,23 +12,6 @@ interface DailyProps {
   description: string;
 }
 
-const useStyles = makeStyles((theme) => ({
-  degrees: {
-    lineHeight: 1,
-  },
-  max: {
-    color: "#f44336",
-  },
-  min: {
-    color: "#90a4ae",
-  },
-  weekday: {},
-  daily: {
-    width: "auto",
-    flexaWrap: "nowrap",
-  },
-}));
-
 export const Daily: React.FC<DailyProps> = ({
   idx,
   dt,
@@ -37,7 +20,6 @@ export const Daily: React.FC<DailyProps> = ({
   tempMax,
   description,
 }) => {
-  const classes = useStyles();
   const [imageLoading, setImageLoading] = useState<boolean>(true);
 
   let weekdayStr;
@@ -55,9 +37,9 @@ export const Daily: React.FC<DailyProps> = ({
       container
       alignItems="center"
       direction="column"
-      className={classes.daily}
+      className={styles.Daily}
     >
-      <span className={classes.weekday}>{weekdayStr}</span>
+      <span>{weekdayStr}</span>
       {imageLoading ? <CircularProgress /> : null}
       <img
         src={`http://openweathermap.org/img/wn/${iconId}@2x.png`}
@@ -67,10 +49,10 @@ export const Daily: React.FC<DailyProps> = ({
         }}
         alt={description}
       />
-      <span className={classes.degrees}>
-        <span className={classes.max}>{Math.round(tempMax)}&deg;</span>
+      <span className={styles.Degrees}>
+        <span className={styles.Max}>{Math.round(tempMax)}&deg;</span>
         &nbsp;/&nbsp;
-        <span className={classes.min}>{Math.round(tempMin)}&deg;</span>
+        <span className={styles.Min}>{Math.round(tempMin)}&deg;</span>
       </span>
     </Grid>
   );

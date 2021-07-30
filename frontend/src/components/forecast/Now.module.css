@@ -1,0 +1,25 @@
+.Degrees {
+  color: #63a4ff;
+  font-size: 3em;
+  line-height: 1;
+  position: relative;
+}
+
+.Degrees:after {
+  content: "°";
+  position: absolute;
+  top: 0;
+}
+
+.Description {
+  font-size: 1em;
+  margin-top: 1em;
+}
+
+.Now {
+  background-color: white;
+}
+
+.Name {
+  font-size: 2em;
+}

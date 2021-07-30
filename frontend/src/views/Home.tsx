@@ -16,36 +16,9 @@ import { AutoCompleteOption } from "../utils/interfaces";
 import { useHistory } from "react-router-dom";
 import { getSlugFromName } from "../utils/location-name-slug";
 import { CircularLoading } from "../components/general/CircularLoading";
-
-const useStyles = makeStyles((theme: Theme) => ({
-  container: {
-    width: "100vw",
-    height: "100vh",
-  },
-  paper: {
-    display: "flex",
-    alignItems: "center",
-    padding: "5px 10px",
-  },
-  input: {
-    padding: "10px",
-  },
-  icon: {
-    color: theme.palette.primary.main,
-  },
-  form: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "400px",
-  },
-  labelNotShrink: {
-    transform: "translate(40px, 21px) scale(1)",
-  },
-}));
+import styles from "./Home.module.css";
 
 const Home = () => {
-  const classes = useStyles();
   const [loading, setLoading] = useState<boolean>(false);
   const [shrink, setShrink] = useState<boolean>(false);
   const [locationOptions, setLocationOptions] = useState<AutoCompleteOption[]>(
@@ -160,12 +133,12 @@ const Home = () => {
             onBlur={handleBlur}
             InputLabelProps={{
               shrink: shrink,
-              className: shrink ? undefined : classes.labelNotShrink,
+              className: shrink ? undefined : styles.LabelNotShrink,
             }}
             InputProps={{
               ...params.InputProps,
               onChange: handleChange,
-              startAdornment: <NearMeIcon className={classes.icon} />,
+              startAdornment: <NearMeIcon className={styles.Icon} />,
               endAdornment: (
                 <Button
                   color="primary"
@@ -181,7 +154,7 @@ const Home = () => {
       />
     );
     // eslint-disable-next-line
-  }, [loading, locationOptions, shrink, classes.icon, classes.labelNotShrink]);
+  }, [loading, locationOptions, shrink, styles.Icon, styles.LabelNotShrink]);
 
   const handleBlur = (e: any) => {
     if (e.target.value.length === 0) {
@@ -197,7 +170,7 @@ const Home = () => {
         container
         justifyContent="center"
         alignItems="center"
-        className={classes.container}
+        className={styles.Container}
       >
         <CircularLoading text="Detecting your location..." />
       </Grid>
@@ -210,9 +183,9 @@ const Home = () => {
         container
         justifyContent="center"
         alignItems="center"
-        className={classes.container}
+        className={styles.Container}
       >
-        <Grid item className={classes.form}>
+        <Grid item className={styles.Form}>
           {autoCompleteJSX}
         </Grid>
       </Grid>

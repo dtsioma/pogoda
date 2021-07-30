@@ -1,0 +1,29 @@
+.Container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.Paper {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+}
+
+.Input {
+  padding: 10px;
+}
+
+.Icon {
+  color: #63a4ff;
+}
+
+.Form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+}
+
+.LabelNotShrink {
+  transform: translate(40px, 21px) scale(1);
+}
