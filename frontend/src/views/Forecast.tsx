@@ -40,20 +40,21 @@ export const Forecast: React.FC = () => {
   useEffect(() => {
     let isMounted = true;
     if (localStorage.getItem(slug)) {
+      console.log("slug from storage!");
       // get coordinates from localStorage
       const locData: string = localStorage.getItem(slug)!;
-      setName(locData.split("|")[0]);
       const [lat, lon] = locData.split("|")[1].split(",");
       // fetch forecast with coordinates
       (async () => {
-        const response = await fetchForecastWithCoordinates(lat, lon).then(
-          (resJSON) => {
+        await fetchForecastWithCoordinates(lat, lon).then((resJSON) => {
+          // make sure we are on mounted component
+          if (isMounted) {
+            setName(locData.split("|")[0]);
             setForecast(resJSON);
           }
-        );
+        });
       })();
-    }
-    if (!location.state) {
+    } else if (!location.state) {
       // non-existing slug and no location state, redirect to home
       history.replace("/");
     } else if (
@@ -63,20 +64,20 @@ export const Forecast: React.FC = () => {
       // fetch with placeId, name exists
       (async () => {
         console.log("i'm here");
-        const response = await fetchForecastWithPlaceId(
-          location.state.placeId
-        ).then((resJSON: ForecastResponse) => {
-          // make sure we are on mounted component
-          if (isMounted) {
-            setName(location.state.name);
-            setForecast(resJSON);
-            // save location data in localStorage
-            localStorage.setItem(
-              slug,
-              `${location.state.name}|${resJSON.lat},${resJSON.lon}`
-            );
+        await fetchForecastWithPlaceId(location.state.placeId).then(
+          (resJSON: ForecastResponse) => {
+            // make sure we are on mounted component
+            if (isMounted) {
+              setName(location.state.name);
+              setForecast(resJSON);
+              // save location data in localStorage
+              localStorage.setItem(
+                slug,
+                `${location.state.name}|${resJSON.lat},${resJSON.lon}`
+              );
+            }
           }
-        });
+        );
       })();
     }
 
@@ -100,7 +101,7 @@ export const Forecast: React.FC = () => {
     //   // no placeId, redirect
     //   history.replace("/");
     // }
-  }, []);
+  }, [slug, location.state, history]);
 
   return (
     <Grid
