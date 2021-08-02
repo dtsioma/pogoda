@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, CircularProgress, Grid, makeStyles } from "@material-ui/core";
+import { CircularProgress, Grid } from "@material-ui/core";
 import styles from "./Now.module.css";
 
 interface NowProps {

@@ -1,10 +1,4 @@
-import {
-  Theme,
-  AppBar,
-  Toolbar,
-  makeStyles,
-  Link as MaterialLink,
-} from "@material-ui/core";
+import { AppBar, Toolbar, Link as MaterialLink } from "@material-ui/core";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import GitHubIcon from "@material-ui/icons/GitHub";
