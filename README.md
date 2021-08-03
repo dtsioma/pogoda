@@ -4,7 +4,9 @@
 
 ## About
 
-*Pogoda* is an application for getting weather forecast for today and next week. Data is fetched from OpenWeatherMap API and Google API. 
+*Pogoda* is an application for getting weather forecast for today and next week. Data is fetched from OpenWeatherMap API and Google API.
+
+![Demo](https://i.imgur.com/VVXdqDt.gif)
 
 ## Tech stack
 
